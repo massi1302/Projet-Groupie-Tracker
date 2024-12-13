@@ -1,0 +1,16 @@
+{
+    "app_name": "My App",
+    "version": "0.0.1",
+    "server": {
+      "url": "localhost",
+      "port": "8080",
+      "static_web": {
+        "template": {
+          "dir": "./resources/templates/*.html"
+        },
+        "assets": {
+          "dir": "./resources/assets"
+        }
+      }
+    }
+  }
