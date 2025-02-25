@@ -1,0 +1,141 @@
+:root {
+    --nasa-blue: #0B3D91;
+    --nasa-red: #FC3D21;
+    --space-black: #000000;
+    --star-color: #FFFFFF;
+    --light-gray: #CCCCCC;
+}
+
+body {
+    background-color: var(--space-black);
+    color: var(--star-color);
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-image: 
+        radial-gradient(white, rgba(255,255,255,.2) 2px, transparent 40px),
+        radial-gradient(white, rgba(255,255,255,.15) 1px, transparent 30px),
+        radial-gradient(white, rgba(255,255,255,.1) 2px, transparent 40px),
+        radial-gradient(rgba(255,255,255,.4), rgba(255,255,255,.1) 2px, transparent 30px);
+    background-size: 550px 550px, 350px 350px, 250px 250px, 150px 150px;
+    background-position: 0 0, 40px 60px, 130px 270px, 70px 100px;
+    background-attachment: fixed;
+}
+
+/* Header Banner */
+.categories-banner {
+    text-align: center;
+    padding: 100px 20px 40px;
+    background-image: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('/assets/Images/space-banner.jpg');
+    background-size: cover;
+    background-position: center;
+    position: relative;
+}
+
+.categories-banner h1 {
+    font-size: 38px;
+    margin-bottom: 15px;
+    color: var(--star-color);
+}
+
+.categories-banner p {
+    font-size: 18px;
+    max-width: 700px;
+    margin: 0 auto;
+    color: var(--light-gray);
+}
+
+/* Categories Grid */
+.categories-container {
+    max-width: 1200px;
+    margin: 40px auto;
+    padding: 0 20px;
+}
+
+.categories-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 30px;
+}
+
+.category-card {
+    background: rgba(11, 61, 145, 0.1);
+    border-radius: 10px;
+    overflow: hidden;
+    padding: 30px 20px;
+    text-align: center;
+    text-decoration: none;
+    color: var(--star-color);
+    transition: all 0.3s ease;
+    position: relative;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+}
+
+.category-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4);
+}
+
+.category-icon {
+    margin-bottom: 20px;
+}
+
+.category-icon .icon {
+    font-size: 50px;
+}
+
+.category-card h2 {
+    font-size: 22px;
+    margin: 0;
+}
+
+.category-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(11, 61, 145, 0.85);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: all 0.3s ease;
+}
+
+.category-card:hover .category-overlay {
+    opacity: 1;
+}
+
+.explore-text {
+    color: white;
+    font-size: 18px;
+    font-weight: bold;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
+
+/* Category Items Display */
+.category-header {
+    padding: 100px 20px 30px;
+    text-align: center;
+    background: linear-gradient(to bottom, rgba(11, 61, 145, 0.7), rgba(0, 0, 0, 0.7)), url('/assets/Images/space-banner.jpg');
+    background-size: cover;
+    background-position: center;
+    color: var(--star-color);
+    position: relative;
+}
+
+.category-header h1 {
+    font-size: 38px;
+    margin-bottom: 15px;
+}
+
+.category-header p {
+    font-size: 18px;
+    max-width: 700px;
+    margin: 0 auto;
+}
+

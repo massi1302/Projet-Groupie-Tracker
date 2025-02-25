@@ -1,0 +1,253 @@
+
+{{define "search"}}
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NASA Explorer - Résultats de recherche</title>
+    <link rel="stylesheet" href="/assets/css/home.css">
+    <link rel="stylesheet" href="/assets/css/search.css">
+</head>
+<body>
+    <header class="main-header">
+        <nav>
+            <div class="logo">
+                <img src="/assets/Images/nasa-logo.svg" alt="NASA Logo">
+            </div>
+            <ul>
+                <li><a href="/">Accueil</a></li>
+                <li><a href="/collection">Collection</a></li>
+                <li><a href="/categories">Catégories</a></li>
+                <li><a href="/favoris">Favoris</a></li>
+                <li><a href="/about">À propos</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="search-container">
+        <div class="search-header">
+            <h1>Résultats de recherche</h1>
+            <div class="search-stats">
+                <p>{{.Results.Total}} résultats trouvés pour "{{.Results.Query}}"</p>
+            </div>
+            <div class="search-box">
+                <form action="/search" method="GET">
+                    <input type="text" name="q" value="{{.Results.Query}}" placeholder="Rechercher..." class="search-input">
+                    <button type="submit" class="search-button">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="11" cy="11" r="8"/>
+                            <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+                        </svg>
+                    </button>
+                </form>
+            </div>
+        </div>
+
+        <div class="search-results">
+            {{if eq .Results.Total 0}}
+                <div class="no-results">
+                    <h2>Aucun résultat trouvé</h2>
+                    <p>Essayez avec des termes différents ou vérifiez l'orthographe.</p>
+                </div>
+            {{else}}
+                <div class="results-grid">
+                    {{range .Results.Items}}
+                    <article class="result-card">
+                        <div class="result-media">
+                            {{if eq .Type "video"}}
+                                <div class="video-thumbnail">
+                                    <img src="/assets/Images/video-placeholder.jpg" alt="{{.Title}}">
+                                    <div class="play-icon">▶</div>
+                                </div>
+                            {{else}}
+                                <img src="{{.URL}}" alt="{{.Title}}" loading="lazy">
+                            {{end}}
+                        </div>
+                        <div class="result-content">
+                            <h2>{{.Title}}</h2>
+                            <div class="result-metadata">
+                                <span class="date">{{.Date}}</span>
+                                <span class="source">{{.Source}}</span>
+                            </div>
+                            <p class="result-description">{{.Explanation}}</p>
+                            <a href="/resource/{{.ID}}" class="view-details">Voir les détails →</a>
+                        </div>
+                    </article>
+                    {{end}}
+                </div>
+            {{end}}
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>À propos de NASA Explorer</h3>
+                <p>NASA Explorer est votre portail vers l'exploration spatiale. Découvrez les dernières nouvelles, images et découvertes de l'agence spatiale américaine.</p>
+            </div>
+            <div class="footer-section">
+                <h3>Navigation</h3>
+                <ul class="footer-links">
+                    <li><a href="/">Accueil</a></li>
+                    <li><a href="/collection">Collection</a></li>
+                    <li><a href="/categories">Catégories</a></li>
+                    <li><a href="/favoris">Favoris</a></li>
+                    <li><a href="/about">À propos</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>&copy; 2025 NASA Explorer - Développé avec ❤️ pour l'exploration spatiale.</p>
+        </div>
+    </footer>
+
+    <style>
+        .search-container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+
+        .search-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .search-box {
+            max-width: 600px;
+            margin: 1rem auto;
+        }
+
+        .search-box form {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .search-input {
+            flex: 1;
+            padding: 0.75rem 1rem;
+            border: 2px solid #e2e8f0;
+            border-radius: 0.5rem;
+            font-size: 1rem;
+        }
+
+        .search-button {
+            padding: 0.75rem;
+            background: #1d4ed8;
+            color: white;
+            border: none;
+            border-radius: 0.5rem;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+
+        .search-button:hover {
+            background: #1e40af;
+        }
+
+        .results-grid {
+            display: grid;
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .result-card {
+            display: flex;
+            gap: 1.5rem;
+            padding: 1.5rem;
+            background: white;
+            border-radius: 0.5rem;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+
+        .result-media {
+            flex: 0 0 200px;
+            position: relative;
+        }
+
+        .result-media img {
+            width: 100%;
+            height: 150px;
+            object-fit: cover;
+            border-radius: 0.375rem;
+        }
+
+        .video-thumbnail {
+            position: relative;
+        }
+
+        .play-icon {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(0, 0, 0, 0.7);
+            color: white;
+            padding: 1rem;
+            border-radius: 50%;
+        }
+
+        .result-content {
+            flex: 1;
+        }
+
+        .result-content h2 {
+            margin: 0 0 0.5rem;
+            font-size: 1.25rem;
+            color: #1a202c;
+        }
+
+        .result-metadata {
+            display: flex;
+            gap: 1rem;
+            font-size: 0.875rem;
+            color: #64748b;
+            margin-bottom: 0.75rem;
+        }
+
+        .result-description {
+            color: #475569;
+            margin-bottom: 1rem;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .view-details {
+            color: #1d4ed8;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .view-details:hover {
+            text-decoration: underline;
+        }
+
+        .no-results {
+            text-align: center;
+            padding: 3rem;
+            background: white;
+            border-radius: 0.5rem;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+
+        @media (max-width: 768px) {
+            .result-card {
+                flex-direction: column;
+            }
+
+            .result-media {
+                flex: 0 0 auto;
+            }
+
+            .result-media img {
+                width: 100%;
+                height: 200px;
+            }
+        }
+    </style>
+</body>
+</html>
+{{end}}

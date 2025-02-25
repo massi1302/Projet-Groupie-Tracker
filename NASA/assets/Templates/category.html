@@ -1,0 +1,104 @@
+{{define "category"}}
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NASA Explorer - {{.CategoryName}}</title>
+    <link rel="stylesheet" href="/assets/css/home.css">
+    <link rel="stylesheet" href="/assets/css/categories.css">
+</head>
+<body>
+    <header class="main-header">
+        <nav>
+            <div class="logo">
+                <img src="/assets/Images/nasa-logo.svg" alt="NASA Logo">
+            </div>
+            <ul>
+                <li><a href="/">Accueil</a></li>
+                <li><a href="/collection">Collection</a></li>
+                <li><a href="/categories" class="active">Catégories</a></li>
+                <li><a href="/favoris">Favoris</a></li>
+                <li><a href="/about">À propos</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <div class="category-header">
+        <h1>Catégorie: {{.CategoryName}}</h1>
+        <div class="category-nav">
+            <select id="categorySelect" onchange="changeCategory()">
+                <option value="">Sélectionner une catégorie</option>
+                {{range .Categories}}
+                <option value="{{.}}" {{if eq . $.CategoryName}}selected{{end}}>{{.}}</option>
+                {{end}}
+            </select>
+        </div>
+    </div>
+
+    <main class="category-items-container">
+        {{if .Items}}
+            <div class="items-grid">
+                {{range $index, $item := .Items}}
+                <div class="item-card" data-index="{{$index}}">
+                    <a href="/resource/{{$index}}" class="item-link">
+                        <div class="item-image">
+                            {{if eq .Type "video"}}
+                                <div class="video-indicator">
+                                    <span class="play-icon">▶</span>
+                                </div>
+
+                            {{else}}
+                                <img src="{{.URL}}" alt="{{.Title}}" loading="lazy">
+                            {{end}}
+                        </div>
+                        <div class="item-info">
+                            <h3>{{.Title}}</h3>
+                            <div class="item-meta">
+                                <span class="item-date">{{.Date}}</span>
+                                <span class="item-source">{{.Source}}</span>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                {{end}}
+            </div>
+        {{else}}
+            <div class="no-items">
+                <p>Aucun élément trouvé dans cette catégorie.</p>
+                <a href="/categories" class="back-button">Retour aux catégories</a>
+            </div>
+        {{end}}
+    </main>
+
+    <script>
+        // Fonction pour changer de catégorie
+        function changeCategory() {
+            const select = document.getElementById('categorySelect');
+            const selectedCategory = select.value;
+            
+            if (selectedCategory) {
+                window.location.href = `/categories/${selectedCategory}`;
+            }
+        }
+        
+        // Fonction pour extraire l'ID YouTube
+        function extractYoutubeID(url) {
+            const regExp = /^.*((youtu.be\/)|(v\/)|(\/u\/\w\/)|(embed\/)|(watch\?))\??v?=?([^#\&\?]*).*/;
+            const match = url.match(regExp);
+            return (match && match[7].length == 11) ? match[7] : false;
+        }
+        
+        // Animation au chargement
+        document.addEventListener('DOMContentLoaded', function() {
+            const cards = document.querySelectorAll('.item-card');
+            cards.forEach((card, index) => {
+                setTimeout(() => {
+                    card.classList.add('visible');
+                }, index * 100);
+            });
+        });
+    </script>
+</body>
+</html>
+{{end}}

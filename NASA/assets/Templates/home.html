@@ -1,0 +1,277 @@
+{{define "home"}}
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NASA Explorer</title>
+    <link rel="stylesheet" href="/assets/css/style.css">
+    <link rel="stylesheet" href="/assets/css/home.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <header class="main-header">
+        <nav>
+            <div class="logo">
+                <img src="/assets/Images/nasa-logo.svg" alt="NASA Logo">
+            </div>
+            <ul>
+                <li><a href="/" class="active">Accueil</a></li>
+                <li><a href="/collection">Collection</a></li>
+                <li><a href="/categories">Catégories</a></li>
+                <li><a href="/favoris">Favoris</a></li>
+                <li><a href="/about">À propos</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section class="hero">
+            <h1>Explorez l'Univers</h1>
+            <p>Découvrez les merveilles de l'espace à travers les yeux de la NASA</p>
+            
+            <!-- Nouvelle barre de recherche -->
+            <div class="search-container">
+                <div class="search-box">
+                    <form action="/home-search" method="GET">
+                        <input type="text" name="q" class="search-input" placeholder="Rechercher des images, des missions, des planètes...">
+                        <button type="submit" class="search-button">Rechercher</button>
+                    </form>
+                </div>
+            </div>
+        </section>
+        <section class="apod-section">
+            <div class="apod-container">
+                <div class="apod-header">
+                    <span class="apod-label">TODAY</span>
+                    <h2>Image Of The Day</h2>
+                </div>
+                <div class="apod-content">
+                    <div class="apod-info">
+                        <h3>{{.APOD.Title}}</h3>
+                        <p class="description">{{.APOD.Explanation}}</p>
+                        <a href="/archive" class="browse-link">Browse Image Archive <span class="arrow-icon">→</span></a>
+                    </div>
+                    <div class="apod-media">
+                        {{if and (ge (len .APOD.URL) 23) (eq (slice .APOD.URL 0 23) "https://www.youtube.com")}}
+                        <div class="apod-video-container">
+                            <iframe 
+                                class="apod-video"
+                                src="{{.APOD.URL}}"
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                allowfullscreen>
+                            </iframe>
+                        </div>
+                    {{else}}
+                        <div class="apod-image-container">
+                            <img src="{{.APOD.URL}}" alt="{{.APOD.Title}}" class="apod-image">
+                            <a href="{{.APOD.URL}}" target="_blank" class="view-image-link">
+                                View image <span class="arrow-icon">→</span>
+                            </a>
+                            <a href="{{.APOD.URL}}" download class="download-button">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                                    <polyline points="7 10 12 15 17 10"></polyline>
+                                    <line x1="12" y1="15" x2="12" y2="3"></line>
+                                </svg>
+                            </a>
+                        </div>
+                    {{end}}
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="featured-news">
+            <div class="container">
+                <div class="section-title">
+                    Featured News
+                    <a href="/news" class="more-link">
+                        More NASA News
+                        <span class="arrow-icon">→</span>
+                    </a>
+                </div>
+                
+                <div class="featured-grid">
+                    {{if ge (len .News) 1}}
+                    <article class="main-article">
+                        <img src="{{(index .News 0).ImageURL}}" alt="{{(index .News 0).Title}}" class="article-image">
+                        <div class="article-overlay">
+                            <span class="article-type">ARTICLE</span>
+                            <h2 class="article-title">{{(index .News 0).Title}}</h2>
+                            <span class="read-time">3 MIN READ</span>
+                        </div>
+                    </article>
+                    {{end}}
+                    
+                    <div class="side-articles">
+                        {{range $index, $item := .News}}
+                            {{if and (gt $index 0) (lt $index 3)}}
+                            <article class="article-card">
+                                <img src="{{$item.ImageURL}}" alt="{{$item.Title}}" class="article-image">
+                                <div class="article-overlay">
+                                    <span class="article-type">NEWS RELEASE</span>
+                                    <h3 class="article-title">{{$item.Title}}</h3>
+                                    <span class="read-time">2 MIN READ</span>
+                                </div>
+                            </article>
+                            {{end}}
+                        {{end}}
+                    </div>
+                </div>
+                
+                <div class="secondary-grid">
+                    {{range $index, $item := .News}}
+                        {{if and (ge $index 3) (lt $index 7)}}
+                        <article class="small-card">
+                            <img src="{{$item.ImageURL}}" alt="{{$item.Title}}">
+                            <div class="small-card-content">
+                                <span class="read-time">4 MIN READ</span>
+                                <h3 class="article-title">{{$item.Title}}</h3>
+                            </div>
+                        </article>
+                        {{end}}
+                    {{end}}
+                </div>
+            </div>
+        </section>
+        <section class="topics-section">
+        <div class="container">
+            <div class="slide">
+                {{range .Topics}}
+                <div class="item" style="background-image: url({{.ImageURL}});">
+                    <div class="content">
+                        <div class="name">{{.Title}}</div>
+                        {{if .Keywords}}
+                        <div class="des">{{index .Keywords 0}}</div>
+                        {{end}}
+                        <button>See More</button>
+                    </div>
+                </div>
+                {{end}}
+            </div>
+        
+            <div class="button">
+                <button class="prev"><i class="fa-solid fa-arrow-left"></i></button>
+                <button class="next"><i class="fa-solid fa-arrow-right"></i></button>
+            </div>
+        </div>
+    </section>
+      
+        
+        <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            let next = document.querySelector('.next')
+            let prev = document.querySelector('.prev')
+        
+            next.addEventListener('click', function(){
+                let items = document.querySelectorAll('.item')
+                document.querySelector('.slide').appendChild(items[0])
+            })
+        
+            prev.addEventListener('click', function(){
+                let items = document.querySelectorAll('.item')
+                document.querySelector('.slide').prepend(items[items.length - 1])
+            })
+        })
+        </script>
+    
+    </main>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>À propos de NASA Explorer</h3>
+                <p>NASA Explorer est votre portail vers l'exploration spatiale. Découvrez les dernières nouvelles, images et découvertes de l'agence spatiale américaine.</p>
+                <div class="social-links">
+                    <a href="#" class="social-link">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M22.46 6c-.77.35-1.6.58-2.46.69.88-.53 1.56-1.37 1.88-2.38-.83.5-1.75.85-2.72 1.05C18.37 4.5 17.26 4 16 4c-2.35 0-4.27 1.92-4.27 4.29 0 .34.04.67.11.98C8.28 9.09 5.11 7.38 3 4.79c-.37.63-.58 1.37-.58 2.15 0 1.49.75 2.81 1.91 3.56-.71 0-1.37-.2-1.95-.5v.03c0 2.08 1.48 3.82 3.44 4.21a4.22 4.22 0 0 1-1.93.07 4.28 4.28 0 0 0 4 2.98 8.521 8.521 0 0 1-5.33 1.84c-.34 0-.68-.02-1.02-.06C3.44 20.29 5.7 21 8.12 21 16 21 20.33 14.46 20.33 8.79c0-.19 0-.37-.01-.56.84-.6 1.56-1.36 2.14-2.23z"/>
+                        </svg>
+                    </a>
+                    <a href="#" class="social-link">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17H9v-7h2v7zm-1-8.75c-.69 0-1.25-.56-1.25-1.25s.56-1.25 1.25-1.25 1.25.56 1.25 1.25-.56 1.25-1.25 1.25zM17 19h-2v-4c0-.9-.67-1.67-1.5-1.67S12 14.1 12 15v4h-2v-7h2v1.43c.72-.85 1.75-1.43 2.9-1.43 1.93 0 3.1 1.67 3.1 3.71V19z"/>
+                        </svg>
+                    </a>
+                    <a href="#" class="social-link">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M7.8 2h8.4C19.4 2 22 4.6 22 7.8v8.4a5.8 5.8 0 0 1-5.8 5.8H7.8C4.6 22 2 19.4 2 16.2V7.8A5.8 5.8 0 0 1 7.8 2m-.2 2A3.6 3.6 0 0 0 4 7.6v8.8C4 18.39 5.61 20 7.6 20h8.8a3.6 3.6 0 0 0 3.6-3.6V7.6C20 5.61 18.39 4 16.4 4H7.6m9.65 1.5a1.25 1.25 0 0 1 1.25 1.25A1.25 1.25 0 0 1 17.25 8 1.25 1.25 0 0 1 16 6.75a1.25 1.25 0 0 1 1.25-1.25M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3z"/>
+                        </svg>
+                    </a>
+                </div>
+            </div>
+            
+            <div class="footer-section">
+                <h3>Navigation</h3>
+                <ul class="footer-links">
+                    <li><a href="/">Accueil</a></li>
+                    <li><a href="/collection">Collection</a></li>
+                    <li><a href="/categories">Catégories</a></li>
+                    <li><a href="/favoris">Favoris</a></li>
+                    <li><a href="/about">À propos</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-section">
+                <h3>Explorez</h3>
+                <ul class="footer-links">
+                    <li><a href="#">Image du Jour</a></li>
+                    <li><a href="#">Dernières Nouvelles</a></li>
+                    <li><a href="#">Missions</a></li>
+                    <li><a href="#">Galerie Photos</a></li>
+                    <li><a href="#">Vidéos</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-section">
+                <h3>Ressources</h3>
+                <ul class="footer-links">
+                    <li><a href="#">API NASA</a></li>
+                    <li><a href="#">Open Data</a></li>
+                    <li><a href="#">Éducation</a></li>
+                    <li><a href="#">Recherche</a></li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="copyright">
+            <p>&copy; 2025 NASA Explorer - Développé avec ❤️ pour l'exploration spatiale.<br>
+            Toutes les images et données sont fournies par la NASA.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Gestion du header transparent
+        window.addEventListener('scroll', function() {
+            const header = document.querySelector('.main-header');
+            if (window.scrollY > 50) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+         // Ajout du scroll smooth pour la flèche
+         document.querySelector('.hero').addEventListener('click', function(e) {
+    // Obtenir la position du bas de .hero
+    const heroRect = this.getBoundingClientRect();
+    const arrowArea = {
+        top: heroRect.bottom - 60, // La zone de la flèche commence 60px au-dessus du bas
+        bottom: heroRect.bottom,
+        left: heroRect.width / 2 - 15, // 15px à gauche du centre
+        right: heroRect.width / 2 + 15  // 15px à droite du centre
+    };
+
+    // Vérifier si le clic est dans la zone de la flèche
+    if (e.clientY >= arrowArea.top && 
+        e.clientY <= arrowArea.bottom &&
+        e.clientX >= arrowArea.left &&
+        e.clientX <= arrowArea.right) {
+        const apodSection = document.querySelector('.apod-section');
+        apodSection.scrollIntoView({ behavior: 'smooth' });
+    }
+});
+    </script>
+</body>
+</html>
+{{end}}

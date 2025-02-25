@@ -1,0 +1,107 @@
+*{{define "collection"}}
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NASA Explorer - Galerie Cosmique</title>
+    <link rel="stylesheet" href="/assets/css/home.css">
+    <link rel="stylesheet" href="/assets/css/collection.css">
+</head>
+<body>
+    <header class="main-header">
+        <nav>
+            <div class="logo">
+                <img src="/assets/Images/nasa-logo.svg" alt="NASA Logo">
+            </div>
+            <ul>
+                <li><a href="/">Accueil</a></li>
+                <li><a href="/collection" class="active">Collection</a></li>
+                <li><a href="/categories">Catégories</a></li>
+                <li><a href="/favoris">Favoris</a></li>
+                <li><a href="/about">À propos</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <div class="gallery-container">
+            {{range $index, $item := .Items}}
+            <div class="gallery-slide {{if eq $index 0}}active{{end}}">
+                {{if eq .Type "video"}}
+                    <iframe 
+                        src="{{.URL}}"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowfullscreen>
+                    </iframe>
+                {{else}}
+                    <img src="{{.URL}}" alt="{{.Title}}" loading="lazy">
+                {{end}}
+                <div class="slide-info">
+                    <h2>{{.Title}}</h2>
+                    <p class="date">{{.Date}}</p>
+                    <p class="description">{{.Explanation}}</p>
+                </div>
+            </div>
+            {{end}}
+
+        <button class="nav-button prev-slide">&lt;</button>
+        <button class="nav-button next-slide">&gt;</button>
+
+        <div class="dot-navigation">
+            {{range $index, $item := .Items}}
+            <div class="dot {{if eq $index 0}}active{{end}}" data-index="{{$index}}"></div>
+            {{end}}
+        </div>
+
+        <div class="slide-counter">
+            <span class="current">1</span>/<span class="total">{{len .Items}}</span>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const slides = document.querySelectorAll('.gallery-slide');
+            const dots = document.querySelectorAll('.dot');
+            const prevButton = document.querySelector('.prev-slide');
+            const nextButton = document.querySelector('.next-slide');
+            const counter = document.querySelector('.slide-counter .current');
+            let currentSlide = 0;
+
+            function showSlide(index) {
+                slides.forEach(slide => slide.classList.remove('active'));
+                dots.forEach(dot => dot.classList.remove('active'));
+                
+                slides[index].classList.add('active');
+                dots[index].classList.add('active');
+                counter.textContent = index + 1;
+            }
+
+            function nextSlide() {
+                currentSlide = (currentSlide + 1) % slides.length;
+                showSlide(currentSlide);
+            }
+
+            function prevSlide() {
+                currentSlide = (currentSlide - 1 + slides.length) % slides.length;
+                showSlide(currentSlide);
+            }
+
+            nextButton.addEventListener('click', nextSlide);
+            prevButton.addEventListener('click', prevSlide);
+
+            dots.forEach((dot, index) => {
+                dot.addEventListener('click', () => {
+                    currentSlide = index;
+                    showSlide(currentSlide);
+                });
+            });
+
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'ArrowRight') nextSlide();
+                if (e.key === 'ArrowLeft') prevSlide();
+            });
+        });
+    </script>
+</body>
+</html>
+{{end}}

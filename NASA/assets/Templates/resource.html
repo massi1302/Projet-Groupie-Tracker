@@ -1,0 +1,145 @@
+{{define "resource"}}
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NASA Explorer - {{.Item.Title}}</title>
+    <link rel="stylesheet" href="/assets/css/home.css">
+    <link rel="stylesheet" href="/assets/css/resource.css">
+</head>
+<body>
+    <header class="main-header">
+        <nav>
+            <div class="logo">
+                <img src="/assets/Images/nasa-logo.svg" alt="NASA Logo">
+            </div>
+            <ul>
+                <li><a href="/">Accueil</a></li>
+                <li><a href="/collection">Collection</a></li>
+                <li><a href="/categories">Catégories</a></li>
+                <li><a href="/favoris">Favoris</a></li>
+                <li><a href="/about">À propos</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="resource-container">
+        <section class="resource-main">
+            <div class="resource-media">
+                {{if eq .Item.Type "video"}}
+                    <iframe 
+                        src="{{.Item.URL}}"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowfullscreen>
+                    </iframe>
+                {{else}}
+                    <img src="{{.Item.URL}}" alt="{{.Item.Title}}">
+                {{end}}
+            </div>
+            
+            <div class="resource-info">
+                <h1>{{.Item.Title}}</h1>
+                <div class="resource-metadata">
+                    <span class="date">Date: {{.Item.Date}}</span>
+                    <span class="source">Source: {{.Item.Source}}</span>
+                </div>
+                <div class="resource-actions">
+                    <button class="favorite-btn" onclick="addToFavorites()">
+                        <span class="heart-icon">♡</span> Ajouter aux favoris
+                    </button>
+                    <button class="share-btn" onclick="shareResource()">
+                        Partager
+                    </button>
+                </div>
+                <div class="resource-description">
+                    <h2>Description</h2>
+                    <p>{{.Item.Explanation}}</p>
+                </div>
+            </div>
+        </section>
+        
+        <section class="related-resources">
+            <h2>Ressources similaires</h2>
+            <div class="related-grid">
+                {{range .RelatedItems}}
+                <div class="related-item">
+                    <a href="#" class="related-link">
+                        <div class="related-image">
+                            {{if eq .Type "video"}}
+                                <div class="video-thumbnail">
+                                    <img src="/assets/Images/video-placeholder.jpg" alt="{{.Title}}">
+                                    <div class="play-icon">▶</div>
+                                </div>
+                            {{else}}
+                                <img src="{{.URL}}" alt="{{.Title}}">
+                            {{end}}
+                        </div>
+                        <h3 class="related-title">{{.Title}}</h3>
+                    </a>
+                </div>
+                {{end}}
+            </div>
+        </section>
+    </main>
+
+    <script>
+        function addToFavorites() {
+            // Récupérer les favoris existants
+            let favorites = JSON.parse(localStorage.getItem('nasaFavorites')) || [];
+            
+            // Ajouter la ressource actuelle
+            const currentResource = {
+                title: "{{.Item.Title}}",
+                url: "{{.Item.URL}}",
+                type: "{{.Item.Type}}",
+                date: "{{.Item.Date}}",
+                source: "{{.Item.Source}}"
+            };
+            
+            // Vérifier si déjà dans les favoris
+            const isAlreadyFavorite = favorites.some(fav => fav.url === currentResource.url);
+            
+            if (!isAlreadyFavorite) {
+                favorites.push(currentResource);
+                localStorage.setItem('nasaFavorites', JSON.stringify(favorites));
+                alert('Ajouté aux favoris !');
+                
+                // Changer l'icône du cœur
+                document.querySelector('.heart-icon').innerHTML = '❤';
+            } else {
+                alert('Déjà dans vos favoris !');
+            }
+        }
+        
+        function shareResource() {
+            // Vérifier si l'API de partage est disponible
+            if (navigator.share) {
+                navigator.share({
+                    title: "{{.Item.Title}}",
+                    text: "Découvrez cette incroyable ressource NASA: {{.Item.Title}}",
+                    url: window.location.href
+                })
+                .catch(err => console.error('Erreur de partage:', err));
+            } else {
+                // Fallback - copier l'URL dans le presse-papier
+                const url = window.location.href;
+                navigator.clipboard.writeText(url)
+                    .then(() => alert('URL copiée dans le presse-papier !'))
+                    .catch(err => console.error('Erreur de copie:', err));
+            }
+        }
+        
+        // Vérifier si déjà dans les favoris au chargement
+        document.addEventListener('DOMContentLoaded', function() {
+            let favorites = JSON.parse(localStorage.getItem('nasaFavorites')) || [];
+            const currentUrl = "{{.Item.URL}}";
+            
+            if (favorites.some(fav => fav.url === currentUrl)) {
+                document.querySelector('.heart-icon').innerHTML = '❤';
+            }
+        });
+    </script>
+</body>
+</html>
+{{end}}

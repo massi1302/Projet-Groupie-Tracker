@@ -1,0 +1,202 @@
+:root {
+    --nasa-blue: #0B3D91;
+    --nasa-red: #FC3D21;
+    --space-black: #000000;
+    --star-color: #FFFFFF;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    background: var(--space-black);
+    color: var(--star-color);
+}
+
+/* Diaporama plein écran */
+.gallery-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background: var(--space-black);
+    overflow: hidden;
+}
+
+.gallery-slide {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.5s ease;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.gallery-slide.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+.gallery-slide img,
+.gallery-slide iframe {
+    max-width: 100%;
+    max-height: 100vh;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+.gallery-slide iframe {
+    border: none;
+    background: black;
+}
+
+/* Boutons de navigation */
+.nav-button {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(255, 255, 255, 0.1);
+    border: none;
+    color: white;
+    padding: 20px;
+    cursor: pointer;
+    border-radius: 50%;
+    z-index: 1000;
+    transition: background-color 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.nav-button:hover {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+.prev-slide {
+    left: 20px;
+}
+
+.next-slide {
+    right: 20px;
+}
+
+/* Informations de l'image */
+.slide-info {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: rgba(0, 0, 0, 0.8);
+    padding: 20px;
+    transform: translateY(100%);
+    transition: transform 0.3s ease;
+}
+
+.gallery-slide:hover .slide-info {
+    transform: translateY(0);
+}
+
+.slide-info h2 {
+    margin: 0 0 10px 0;
+    font-size: 1.5em;
+}
+
+.slide-info .date {
+    color: var(--nasa-red);
+    margin-bottom: 10px;
+}
+
+.slide-info .description {
+    line-height: 1.6;
+    max-height: 150px;
+    overflow-y: auto;
+}
+
+/* Navigation par points */
+.dot-navigation {
+    position: absolute;
+    bottom: 5px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 10px;
+    z-index: 1000;
+}
+
+.dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.3);
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.dot.active {
+    background: var(--nasa-red);
+}
+
+/* Compteur de slides */
+.slide-counter {
+    position: absolute;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(0, 0, 0, 0.7);
+    padding: 8px 15px;
+    border-radius: 20px;
+    font-size: 0.9em;
+    z-index: 1000;
+}
+
+/* Header */
+.main-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 2000;
+    background: rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(10px);
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+    .nav-button {
+        padding: 15px;
+    }
+
+    .slide-info {
+        padding: 15px;
+    }
+
+    .slide-info h2 {
+        font-size: 1.2em;
+    }
+
+    .dot {
+        width: 8px;
+        height: 8px;
+    }
+}
+
+/* Animation pour le changement de slides */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+.gallery-slide.active {
+    animation: fadeIn 0.5s ease forwards;
+}
+
