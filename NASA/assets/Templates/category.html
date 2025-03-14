@@ -5,8 +5,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>NASA Explorer - {{.CategoryName}}</title>
+    <link rel="stylesheet" href="/assets/css/category.css">
     <link rel="stylesheet" href="/assets/css/home.css">
-    <link rel="stylesheet" href="/assets/css/categories.css">
 </head>
 <body>
     <header class="main-header">
@@ -26,50 +26,114 @@
 
     <div class="category-header">
         <h1>Catégorie: {{.CategoryName}}</h1>
-        <div class="category-nav">
-            <select id="categorySelect" onchange="changeCategory()">
-                <option value="">Sélectionner une catégorie</option>
-                {{range .Categories}}
-                <option value="{{.}}" {{if eq . $.CategoryName}}selected{{end}}>{{.}}</option>
-                {{end}}
-            </select>
+        <div class="category-switcher">
+            <div class="category-nav">
+                <select id="categorySelect" onchange="changeCategory()">
+                    <option value="">Sélectionner une catégorie</option>
+                    {{range .Categories}}
+                    <option value="{{.}}" {{if eq . $.CategoryName}}selected{{end}}>{{.}}</option>
+                    {{end}}
+                </select>
+            </div>
         </div>
     </div>
 
-    <main class="category-items-container">
-        {{if .Items}}
-            <div class="items-grid">
-                {{range $index, $item := .Items}}
-                <div class="item-card" data-index="{{$index}}">
-                    <a href="/resource/{{$index}}" class="item-link">
-                        <div class="item-image">
-                            {{if eq .Type "video"}}
-                                <div class="video-indicator">
-                                    <span class="play-icon">▶</span>
-                                </div>
-
-                            {{else}}
-                                <img src="{{.URL}}" alt="{{.Title}}" loading="lazy">
-                            {{end}}
-                        </div>
-                        <div class="item-info">
+    <div class="category-content">
+        <div class="resources-grid">
+            {{if eq .CategoryName "APOD"}}
+                {{if .Resources}}
+                    {{range .Resources}}
+                    <div class="resource-card item-card">
+                        {{if eq .Type "video"}}
+                            <iframe src="{{.URL}}" frameborder="0" allowfullscreen></iframe>
+                            <div class="resource-type">Vidéo</div>
+                        {{else}}
+                            <img src="{{.URL}}" alt="{{.Title}}">
+                            <div class="resource-type">Image</div>
+                        {{end}}
+                        <div class="resource-info">
                             <h3>{{.Title}}</h3>
-                            <div class="item-meta">
-                                <span class="item-date">{{.Date}}</span>
-                                <span class="item-source">{{.Source}}</span>
-                            </div>
+                            <div class="resource-date">{{.Date}}</div>
+                            <p>{{.Explanation}}</p>
+                            <a href="/detail/{{.ID}}" class="view-btn">Voir en détail</a>
                         </div>
-                    </a>
-                </div>
+                    </div>
+                    {{end}}
+                {{else}}
+                    <div class="no-resources">
+                        <h3>Aucune ressource APOD trouvée</h3>
+                        <p>Veuillez réessayer plus tard.</p>
+                    </div>
                 {{end}}
-            </div>
-        {{else}}
-            <div class="no-items">
-                <p>Aucun élément trouvé dans cette catégorie.</p>
-                <a href="/categories" class="back-button">Retour aux catégories</a>
-            </div>
-        {{end}}
-    </main>
+            {{else if eq .CategoryName "Rover"}}
+                {{if .Resources}}
+                    {{range .Resources}}
+                    <div class="resource-card item-card">
+                        <img src="{{.URL}}" alt="{{.Title}}">
+                        <div class="resource-info">
+                            <h3>{{.Title}}</h3>
+                            <div class="resource-date">{{.Date}}</div>
+                            <p>{{.Explanation}}</p>
+                            <a href="/detail/{{.ID}}" class="view-btn">Voir en détail</a>
+                        </div>
+                    </div>
+                    {{end}}
+                {{else}}
+                    <div class="no-resources">
+                        <h3>Aucune ressource Rover trouvée</h3>
+                        <p>Veuillez réessayer plus tard.</p>
+                    </div>
+                {{end}}
+            {{else if eq .CategoryName "Earth"}}
+                {{if .Resources}}
+                    {{range .Resources}}
+                    <div class="resource-card item-card">
+                        <img src="{{.URL}}" alt="{{.Title}}">
+                        <div class="resource-info">
+                            <h3>{{.Title}}</h3>
+                            <div class="resource-date">{{.Date}}</div>
+                            <p>{{.Explanation}}</p>
+                            <a href="/detail/{{.ID}}" class="view-btn">Voir en détail</a>
+                        </div>
+                    </div>
+                    {{end}}
+                {{else}}
+                    <div class="no-resources">
+                        <h3>Aucune ressource Earth trouvée</h3>
+                        <p>Veuillez réessayer plus tard.</p>
+                    </div>
+                {{end}}
+            {{else if eq .CategoryName "Gallery"}}
+                {{if .Resources}}
+                    {{range .Resources}}
+                    <div class="resource-card item-card">
+                        <img src="{{.URL}}" alt="{{.Title}}">
+                        <div class="resource-info">
+                            <h3>{{.Title}}</h3>
+                            <div class="resource-date">{{.Date}}</div>
+                            <p>{{.Explanation}}</p>
+                            <a href="/detail/{{.ID}}" class="view-btn">Voir en détail</a>
+                        </div>
+                    </div>
+                    {{end}}
+                {{else}}
+                    <div class="no-resources">
+                        <h3>Aucune ressource Gallery trouvée</h3>
+                        <p>Veuillez réessayer plus tard.</p>
+                    </div>
+                {{end}}
+            {{else}}
+                <div class="no-resources">
+                    <h3>Catégorie non reconnue</h3>
+                    <p>Veuillez sélectionner une catégorie valide.</p>
+                </div>
+            {{end}}
+        </div>
+    </div>
+
+    <footer class="main-footer">
+        <p>NASA Explorer - Toutes les images et données sont fournies par les API NASA</p>
+    </footer>
 
     <script>
         // Fonction pour changer de catégorie

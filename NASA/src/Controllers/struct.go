@@ -6,6 +6,7 @@ type CategoryData struct {
 	CategoryName string
 	Items        []UnifiedImageData
 	Categories   []string
+	Resources    []interface{}
 }
 
 type CategoryInfo struct {
@@ -118,10 +119,12 @@ type HomePageData struct {
 }
 
 type APODResponse struct {
+	Date        string `json:"date"`
+	Explanation string `json:"explanation"`
+	HDURL       string `json:"hdurl"`
+	MediaType   string `json:"media_type"`
 	Title       string `json:"title"`
 	URL         string `json:"url"`
-	Explanation string `json:"explanation"`
-	Date        string `json:"date"`
 }
 
 type NewsItem struct {
@@ -137,4 +140,57 @@ type GalleryItem struct {
 	Description string
 	ImageURL    string
 	DateCreated string
+	ID          string
+}
+
+// Structure for Earth Imagery API response
+type EarthImageryResponse struct {
+	Date       string  `json:"date"`
+	ID         string  `json:"id"`
+	URL        string  `json:"url"`
+	CloudScore float64 `json:"cloud_score,omitempty"`
+	Resource   struct {
+		Dataset string `json:"dataset"`
+		Planet  string `json:"planet"`
+	} `json:"resource"`
+}
+
+type EarthAsset struct {
+	Href string `json:"href"`
+}
+
+// Unified data structure for Earth imagery
+type EarthData struct {
+	ID          string   `json:"id"`
+	Title       string   `json:"title"`
+	URL         string   `json:"url"`
+	Date        string   `json:"date"`
+	Coordinates string   `json:"coordinates"`
+	Type        string   `json:"type"`
+	Dataset     string   `json:"dataset"`
+	Description string   `json:"description"`
+	Keywords    []string `json:"keywords"`
+	Source      string   `json:"source"`
+}
+
+// And this struct for the Earth page data
+type EarthPageData struct {
+	Imagery         []EarthData `json:"imagery"`
+	CurrentPage     int         `json:"currentPage"`
+	TotalPages      int         `json:"totalPages"`
+	PaginationRange []int       `json:"paginationRange"`
+	PreviousPage    int         `json:"previousPage"`
+	NextPage        int         `json:"nextPage"`
+}
+
+type EarthAssetsResponse struct {
+	ID       string `json:"id"`
+	URL      string `json:"url"`
+	Date     string `json:"date"`
+	Resource struct {
+		Dataset string `json:"dataset"`
+	} `json:"resource"`
+	Assets map[string]struct {
+		Href string `json:"href"`
+	} `json:"assets"`
 }

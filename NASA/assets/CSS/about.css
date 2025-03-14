@@ -1,0 +1,313 @@
+
+:root {
+    --nasa-blue: #0B3D91;
+    --nasa-red: #FC3D21;
+    --space-black: #000000;
+    --star-color: #FFFFFF;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    background: var(--space-black);
+    color: var(--star-color);
+}
+
+.main-header {
+    background: rgba(0, 0, 0, 0.15); 
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1); 
+    position: absolute; 
+    width: 100%;
+    z-index: 1000; 
+    padding: 10px 0;
+}
+
+.main-header nav {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+nav {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo img {
+    width: 75px; 
+    height: auto; 
+    display: block;
+    margin: 0 auto; 
+}
+
+nav ul {
+    display: flex;
+    list-style: none;
+}
+
+nav ul li a {
+    color: white;
+    text-decoration: none;
+    padding: 0.5rem 1rem;
+    transition: color 0.3s;
+}
+
+nav ul li a:hover {
+    color: #FC3D21;
+}
+
+nav ul li a.active {
+    border-bottom: 2px solid #FC3D21;
+}
+
+
+.hero {
+    background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.7)), url('/assets/Images/about.webp');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    color: white;
+    text-align: center;
+    min-height: 60vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 0;
+    position: relative;
+    gap: 2rem;
+    padding: 80px 20px 40px;
+}
+
+.hero h1 {
+    font-size: 3em;
+    margin-bottom: 20px;
+}
+
+.hero p {
+    font-size: 1.2em;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.section-title {
+    font-size: 2.5rem;
+    font-weight: bold;
+    margin-bottom: 40px;
+    color: var(--star-color);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.project-info {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 8px;
+    padding: 30px;
+    margin-bottom: 40px;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.15);
+}
+
+.project-info h2 {
+    color: var(--nasa-red);
+    font-size: 2rem;
+    margin-bottom: 20px;
+}
+
+.project-info h3 {
+    color: var(--star-color);
+    font-size: 1.5rem;
+    margin: 30px 0 15px;
+}
+
+.project-info p, .project-info li {
+    color: #ccc;
+    line-height: 1.7;
+}
+
+.route-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 15px 0 30px;
+    background: rgba(255, 255, 255, 0.03);
+}
+
+.route-table th, .route-table td {
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 12px;
+    text-align: left;
+}
+
+.route-table th {
+    background: rgba(255, 255, 255, 0.1);
+    color: var(--nasa-red);
+}
+
+.route-table tr:hover {
+    background: rgba(255, 255, 255, 0.05);
+}
+
+code {
+    background: rgba(255, 255, 255, 0.1);
+    padding: 3px 6px;
+    border-radius: 3px;
+    font-size: 0.9em;
+}
+
+.faq-section {
+    padding: 30px 0 60px;
+}
+
+.faq-item {
+    background: rgba(255, 255, 255, 0.05);
+    margin-bottom: 30px;
+    border-radius: 8px;
+    overflow: hidden;
+    transition: transform 0.3s ease;
+}
+
+.faq-item:hover {
+    transform: translateY(-5px);
+}
+
+.faq-question {
+    background: rgba(11, 61, 145, 0.3);
+    padding: 20px;
+    font-weight: bold;
+    color: white;
+    font-size: 1.2em;
+    border-left: 4px solid var(--nasa-red);
+}
+
+.faq-answer {
+    padding: 20px;
+}
+
+footer {
+background: linear-gradient(to bottom, transparent, rgba(11, 61, 145, 0.3));
+backdrop-filter: blur(10px);
+padding: 60px 0 30px;
+color: var(--star-color);
+position: relative;
+overflow: hidden;
+}
+
+.footer::before {
+content: '';
+position: absolute;
+top: 0;
+left: 0;
+right: 0;
+height: 1px;
+background: linear-gradient(to right, transparent, var(--nasa-red), transparent);
+}
+
+.footer-content {
+max-width: 1400px;
+margin: 0 auto;
+display: grid;
+grid-template-columns: 2fr 1fr 1fr 1fr;
+gap: 40px;
+padding: 0 20px;
+}
+
+.footer-section h3 {
+color: var(--nasa-red);
+font-size: 1.2em;
+margin-bottom: 20px;
+position: relative;
+}
+
+.footer-section p {
+color: #ccc;
+line-height: 1.6;
+font-size: 0.9em;
+}
+
+.footer-links {
+list-style: none;
+padding: 0;
+}
+
+.footer-links li {
+margin-bottom: 12px;
+}
+
+.footer-links a {
+color: #ccc;
+text-decoration: none;
+transition: color 0.3s ease;
+display: flex;
+align-items: center;
+gap: 8px;
+}
+
+.footer-links a:hover {
+color: var(--nasa-red);
+}
+
+.social-links {
+display: flex;
+gap: 15px;
+margin-top: 20px;
+}
+
+.social-link {
+width: 36px;
+height: 36px;
+border-radius: 50%;
+background: rgba(255, 255, 255, 0.1);
+display: flex;
+align-items: center;
+justify-content: center;
+transition: all 0.3s ease;
+}
+
+.social-link:hover {
+background: var(--nasa-red);
+transform: translateY(-3px);
+}
+
+.copyright {
+text-align: center;
+padding-top: 30px;
+margin-top: 40px;
+border-top: 1px solid rgba(255, 255, 255, 0.1);
+color: #888;
+font-size: 0.9em;
+}
+
+@media (max-width: 992px) {
+    .hero h1 {
+        font-size: 2.5rem;
+    }
+    .section-title {
+        font-size: 2rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .hero h1 {
+        font-size: 2rem;
+    }
+    .section-title {
+        font-size: 1.8rem;
+    }
+    .project-info h2 {
+        font-size: 1.8rem;
+    }
+    .project-info h3 {
+        font-size: 1.3rem;
+    }
+}

@@ -12,6 +12,8 @@ func InitServe() {
 	resourceRoutes()
 	categoryRoutes()
 	searchRoutes()
+	aboutRoutes()
+	favorisRoutes()
 	// Affiche un message de confirmation dans la console
 	fmt.Println("Le serveur est opérationel : http://localhost:8080")
 	// Configure le serveur sur le port 8080 avec gestion d'erreur

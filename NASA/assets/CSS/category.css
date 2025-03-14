@@ -1,0 +1,216 @@
+  /* Contenu principal */
+  .category-content, 
+  .gallery-container {
+    max-width: 1200px;
+    margin: 70px auto 40px;
+    padding: 20px;
+  }
+  
+  /* Optimisation de l'affichage des images */
+  .resources-grid,
+  .gallery-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 25px;
+  }
+  
+  /* Cartes d'éléments */
+  .resource-card,
+  .gallery-card {
+    background: var(--card-bg);
+    border-radius: var(--border-radius);
+    overflow: hidden;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.4);
+  }
+  
+  /* Conteneur d'image/vidéo optimisé */
+  .resource-card img,
+  .gallery-card img,
+  .card-media img {
+    width: 100%;
+    height: 220px;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.3s ease;
+  }
+  
+  .resource-card:hover img,
+  .gallery-card:hover img {
+    transform: scale(1.03);
+  }
+  
+  /* iframes pour vidéos */
+  .resource-card iframe,
+  .gallery-card iframe {
+    width: 100%;
+    height: 220px;
+    border: 0;
+  }
+  
+  /* Texte et contenu */
+  .resource-info,
+  .card-content {
+    padding: 15px;
+  }
+  
+  /* Titres */
+  .resource-info h3,
+  .card-title {
+    margin: 0 0 8px;
+    font-size: 18px;
+    color: white;
+    line-height: 1.3;
+    font-weight: 500;
+  }
+  
+  /* Date */
+  .resource-date,
+  .card-date {
+    display: block;
+    font-size: 14px;
+    color: #aaa;
+    margin-bottom: 10px;
+  }
+  
+  /* Texte descriptif - amélioration de la lisibilité */
+  .resource-info p,
+  .card-description {
+    color: #ddd;
+    font-size: 15px;
+    line-height: 1.5;
+    margin: 0 0 15px;
+    
+    /* Options pour texte tronqué */
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-height: 4.5em;
+  }
+  
+  /* Bouton */
+  .view-btn {
+    display: inline-block;
+    background: var(--nasa-red);
+    color: white;
+    padding: 8px 16px;
+    border-radius: 4px;
+    text-decoration: none;
+    font-size: 14px;
+    border: none;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+  
+  .view-btn:hover {
+    background: #e03a1c;
+  }
+  
+  /* Type de média (badge) */
+  .resource-type,
+  .media-type {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: rgba(0, 0, 0, 0.6);
+    color: white;
+    padding: 4px 8px;
+    border-radius: 3px;
+    font-size: 12px;
+  }
+  
+  /* Pas de ressources */
+  .no-resources {
+    grid-column: 1 / -1;
+    text-align: center;
+    padding: 40px;
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: var(--border-radius);
+  }
+  
+  .no-resources h3 {
+    margin-top: 0;
+    color: #eee;
+  }
+  
+  /* En-tête de catégorie */
+  .category-header {
+    padding: 80px 20px 30px;
+    margin-bottom: 30px;
+    background-color: rgba(11, 61, 145, 0.2);
+    text-align: center;
+  }
+  
+  .category-header h1 {
+    font-size: 28px;
+    margin: 0 0 20px;
+  }
+  
+  /* Sélecteur de catégorie */
+  #categorySelect {
+    background: var(--nasa-blue);
+    color: white;
+    padding: 8px 16px;
+    border: none;
+    border-radius: 4px;
+    font-size: 16px;
+    cursor: pointer;
+  }
+  
+  /* Footer */
+  .main-footer {
+    text-align: center;
+    padding: 20px;
+    background: #000;
+    margin-top: 40px;
+    color: #999;
+    font-size: 14px;
+  }
+  
+  /* Responsive */
+  @media (max-width: 768px) {
+    .main-header nav {
+      flex-direction: column;
+      padding: 10px;
+    }
+    
+    .main-header ul {
+      margin: 15px 0 0;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    
+    .main-header li {
+      margin: 0 10px 5px;
+    }
+    
+    .resources-grid,
+    .gallery-container {
+      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+      gap: 20px;
+    }
+    
+    .category-header {
+      padding: 70px 15px 25px;
+    }
+    
+    .category-header h1 {
+      font-size: 24px;
+    }
+  }
+  
+  /* Pour les petits écrans */
+  @media (max-width: 480px) {
+    .resources-grid,
+    .gallery-container {
+      grid-template-columns: 1fr;
+    }
+    
+    .resource-card img,
+    .gallery-card img,
+    .resource-card iframe,
+    .gallery-card iframe {
+      height: 200px;
+    }
+  }

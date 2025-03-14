@@ -36,6 +36,7 @@ var templateFuncs = template.FuncMap{
 		}
 		return b
 	},
+	"multiply": func(a, b int) int { return a * b },
 }
 
 // InitTemplates charge les templates avec les fonctions helper

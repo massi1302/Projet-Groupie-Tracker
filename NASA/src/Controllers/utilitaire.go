@@ -54,8 +54,6 @@ func getAPODData() []UnifiedImageData {
 func getAllRoversData() []UnifiedImageData {
 	rovers := []RoverConfig{
 		{Name: "curiosity", Sols: []int{1000, 2000, 3000}},
-		{Name: "opportunity", Sols: []int{100, 500, 1000}},
-		{Name: "spirit", Sols: []int{100, 500, 1000}},
 		{Name: "perseverance", Sols: []int{100, 200, 300}},
 	}
 
@@ -63,14 +61,24 @@ func getAllRoversData() []UnifiedImageData {
 	var wg sync.WaitGroup
 	var mutex sync.Mutex
 
+	// Utiliser une map pour suivre les URLs déjà ajoutées et éviter les doublons
+	urlMap := make(map[string]bool)
+
 	for _, rover := range rovers {
 		for _, sol := range rover.Sols {
 			wg.Add(1)
 			go func(roverName string, sol int) {
 				defer wg.Done()
 				data := getRoverData(roverName, sol)
+
 				mutex.Lock()
-				allData = append(allData, data...)
+				// Ajouter uniquement les images avec des URLs uniques
+				for _, item := range data {
+					if _, exists := urlMap[item.URL]; !exists {
+						urlMap[item.URL] = true
+						allData = append(allData, item)
+					}
+				}
 				mutex.Unlock()
 			}(rover.Name, sol)
 		}
@@ -82,7 +90,7 @@ func getAllRoversData() []UnifiedImageData {
 
 func getRoverData(roverName string, sol int) []UnifiedImageData {
 	apiKey := "UcitNGyctCYzAsLCq0lO2q9URTcol74cw31ThtML"
-	url := fmt.Sprintf("https://api.nasa.gov/mars-photos/api/v1/rovers/%s/photos?sol=%d&api_key=%s",
+	url := fmt.Sprintf("https://api.nasa.gov/mars-photos/api/v1/rovers/%s/photos?sol=%d&page=1&api_key=%s",
 		roverName, sol, apiKey)
 
 	var roverResponse MarsRoverResponse
@@ -95,6 +103,9 @@ func getRoverData(roverName string, sol int) []UnifiedImageData {
 	maxPhotos := 15 // Photos par sol et par rover
 	processedPhotos := 0
 
+	// Utiliser une map locale pour éviter les doublons dans cette requête spécifique
+	localUrlMap := make(map[string]bool)
+
 	for _, photo := range roverResponse.Photos {
 		if processedPhotos >= maxPhotos {
 			break
@@ -102,7 +113,13 @@ func getRoverData(roverName string, sol int) []UnifiedImageData {
 
 		imgURL := strings.Replace(photo.ImgSrc, "http://", "https://", 1)
 
+		// Vérifier que l'URL n'est pas déjà dans cette requête
+		if _, exists := localUrlMap[imgURL]; exists {
+			continue
+		}
+
 		if isValidImage(imgURL) {
+			localUrlMap[imgURL] = true
 			unifiedData = append(unifiedData, UnifiedImageData{
 				Title: fmt.Sprintf("%s (Sol %d): %s", photo.Rover.Name, sol, photo.Camera.FullName),
 				URL:   imgURL,
@@ -111,6 +128,7 @@ func getRoverData(roverName string, sol int) []UnifiedImageData {
 					photo.Rover.Name, sol, photo.Camera.FullName),
 				Source: fmt.Sprintf("Mars Rover - %s", photo.Rover.Name),
 				Type:   "image",
+				ID:     fmt.Sprintf("%s-%d-%s", photo.Rover.Name, sol, strings.Replace(photo.ImgSrc, "/", "-", -1)),
 			})
 			processedPhotos++
 		}
@@ -164,7 +182,7 @@ func getNASAGallery() ([]GalleryItem, error) {
 	var gallery []GalleryItem
 	for _, item := range response.Collection.Items {
 		// Limiter à 6 images
-		if len(gallery) >= 6 {
+		if len(gallery) >= 24 {
 			break
 		}
 
@@ -408,4 +426,76 @@ func isValidImage(url string) bool {
 
 	// Vérifier le code de status et le type de contenu
 	return resp.StatusCode == http.StatusOK && strings.HasPrefix(resp.Header.Get("Content-Type"), "image/")
+}
+
+// fonction pour récupérer les images Earth pour la collection
+func getEarthImagesForCollection() []UnifiedImageData {
+	// Predefined interesting locations with coordinates (from EarthPage)
+	locations := []struct {
+		Name string
+		Lat  string
+		Lon  string
+	}{
+		{"Paris", "48.8566", "2.3522"},
+		{"New York", "40.7128", "-74.0060"},
+		{"Sydney", "-33.8688", "151.2093"},
+		{"Pyramides de Gizeh", "29.9792", "31.1342"},
+		{"Las Vegas", "36.1699", "-115.1398"},
+		{"Mont Everest", "27.9881", "86.9250"},
+		{"Grand Canyon", "36.0544", "-112.2401"},
+		{"Tokyo", "35.6762", "139.6503"},
+		{"Rio de Janeiro", "-22.9068", "-43.1729"},
+		{"Sahara Desert", "23.4162", "25.6628"},
+		{"Amazon Rainforest", "-3.4653", "-62.2159"},
+		{"Mount Fuji", "35.3606", "138.7274"},
+		{"Victoria Falls", "-17.9244", "25.8567"},
+		{"Himalayas", "28.3949", "84.1240"},
+		{"Matterhorn", "45.9763", "7.6587"},
+		{"Niagara Falls", "43.0812", "-79.0745"},
+		{"Easter Island", "-27.1127", "-109.3497"},
+		{"Mount Kilimanjaro", "-3.0674", "37.3556"},
+		{"Angel Falls", "5.9679", "-62.5357"},
+		{"Mount Vesuvius", "40.8219", "14.4265"},
+		{"Taj Mahal", "27.1751", "78.0421"},
+		{"Machu Picchu", "-13.1631", "-72.5450"},
+		{"Great Wall of China", "40.4319", "116.5704"},
+		{"Stonehenge", "51.1789", "-1.8262"},
+		{"Petra", "30.3285", "35.4444"},
+		{"Mount Rushmore", "43.8791", "-103.4591"},
+		{"Eiffel Tower", "48.8584", "2.2945"},
+		{"Colosseum", "41.8902", "12.4922"},
+		{"Statue of Liberty", "40.6892", "-74.0445"},
+		{"Burj Khalifa", "25.276987", "55.296249"},
+		{"Golden Gate Bridge", "37.8199", "-122.4783"},
+		{"Sydney Opera House", "-33.8572", "151.2152"},
+		{"Mount Everest Base Camp", "28.0024", "86.8524"},
+		{"Matterhorn", "45.9763", "7.6587"},
+	}
+
+	// Create a slice to hold all Earth data
+	var unifiedItems []UnifiedImageData
+
+	// Fetch data for each location
+	for _, location := range locations {
+		earthItems := getReliableEarthData(location.Lat, location.Lon, "")
+
+		// Skip any empty results
+		if len(earthItems) > 0 {
+			for i, item := range earthItems {
+				unifiedItem := UnifiedImageData{
+					Title:       location.Name + " - " + item.Title,
+					URL:         item.URL,
+					Date:        item.Date,
+					Explanation: item.Description,
+					Type:        item.Type,
+					Source:      "Earth View - " + item.Source,
+					ID:          fmt.Sprintf("earth-%s-%d", location.Name, i), // Ajout d'un ID unique
+				}
+				unifiedItems = append(unifiedItems, unifiedItem)
+			}
+		}
+	}
+
+	log.Printf("Total Earth data items converted: %d", len(unifiedItems))
+	return unifiedItems
 }

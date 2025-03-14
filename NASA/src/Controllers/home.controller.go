@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"log"
 	"net/http"
+	"strings"
 	"sync"
 )
 
@@ -93,12 +94,36 @@ func HomePage(w http.ResponseWriter, r *http.Request) {
 
 func HomeSearchHandler(w http.ResponseWriter, r *http.Request) {
 	query := r.FormValue("q")
-	if query == "" {
-		// Si pas de recherche, rediriger vers la page d'accueil
+
+	// Récupérer d'éventuels filtres initiaux (facultatif)
+	source := r.FormValue("source")
+	mediaType := r.FormValue("type")
+
+	// Construire l'URL de redirection
+	redirectURL := "/search"
+
+	// Ajouter les paramètres
+	if query != "" || source != "" || mediaType != "" {
+		redirectURL += "?"
+
+		params := []string{}
+		if query != "" {
+			params = append(params, "q="+query)
+		}
+		if source != "" {
+			params = append(params, "source="+source)
+		}
+		if mediaType != "" {
+			params = append(params, "type="+mediaType)
+		}
+
+		redirectURL += strings.Join(params, "&")
+	} else {
+		// Si pas de recherche ou filtres, rediriger vers la page d'accueil
 		http.Redirect(w, r, "/", http.StatusSeeOther)
 		return
 	}
 
-	// Rediriger vers la page de recherche avec le paramètre
-	http.Redirect(w, r, "/search?q="+query, http.StatusSeeOther)
+	// Rediriger vers la page de recherche avec les paramètres
+	http.Redirect(w, r, redirectURL, http.StatusSeeOther)
 }

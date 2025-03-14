@@ -28,3 +28,13 @@ func categoryRoutes() {
 func searchRoutes() {
 	http.HandleFunc("/search", controllers.SearchHandler)
 }
+
+func aboutRoutes() {
+	http.HandleFunc("/about", controllers.AboutPage)
+}
+
+func favorisRoutes() {
+	http.HandleFunc("/favoris", controllers.FavorisPage)
+	http.HandleFunc("/favoris/add/", controllers.AddToFavoris)
+	http.HandleFunc("/favoris/remove/", controllers.RemoveFromFavoris)
+}

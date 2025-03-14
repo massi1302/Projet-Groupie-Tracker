@@ -32,12 +32,11 @@
             
             <!-- Nouvelle barre de recherche -->
             <div class="search-container">
-                <div class="search-box">
-                    <form action="/home-search" method="GET">
-                        <input type="text" name="q" class="search-input" placeholder="Rechercher des images, des missions, des planètes...">
-                        <button type="submit" class="search-button">Rechercher</button>
-                    </form>
-                </div>
+                <form action="/search" method="GET" class="search-box">
+                    <i class="search-icon fa fa-search"></i> <!-- Ajoutez Font Awesome ou un autre framework d'icônes -->
+                    <input type="text" name="q" class="search-input" placeholder="Explorez l'univers NASA..." required>
+                    <button type="submit" class="search-button">Rechercher</button>
+                </form>
             </div>
         </section>
         <section class="apod-section">
