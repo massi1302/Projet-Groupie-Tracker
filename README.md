@@ -81,13 +81,6 @@ L'application suit une architecture MVC (Model-View-Controller) avec les composa
 
 Le projet a été développé en utilisant une approche agile avec des sprints hebdomadaires et une organisation des tâches basée sur la matrice MoSCoW (Must have, Should have, Could have, Won't have).
 
-## 🧪 Tests
-
-Pour exécuter les tests unitaires :
-
-```bash
-go test ./...
-```
 
 ## 📚 Documentation
 
@@ -101,11 +94,3 @@ Pour plus d'informations sur l'utilisation de l'API NASA, consultez la [document
 4. Poussez vers la branche (`git push origin feature/nouvelle-fonctionnalite`)
 5. Créez une nouvelle Pull Request
 
-## 📝 Licence
-
-Ce projet est sous licence MIT. Voir le fichier LICENSE pour plus de détails.
-
-## 🙏 Remerciements
-
-- La NASA pour l'accès à ses API publiques et ses ressources
-- L'équipe de développement pour son travail acharné et sa passion pour l'exploration spatiale
