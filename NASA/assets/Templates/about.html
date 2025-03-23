@@ -130,97 +130,98 @@
             <h2 class="section-title">FAQ - Déroulement du Projet</h2>
             
             <div class="faq-item">
-                <div class="faq-question">Comment avons-nous décomposé le projet ? Quelles ont été les phases clé ?</div>
-                <div class="faq-answer">
-                    <p>Notre approche de décomposition du projet s'est articulée autour des phases suivantes :</p>
-                    <ol>
-                        <li><strong>Phase d'analyse (1 semaine)</strong> : Nous avons commencé par étudier l'API de la NASA pour comprendre les données disponibles et définir le périmètre du projet.</li>
-                        <li><strong>Phase de conception (1 semaine)</strong> : Nous avons conçu l'architecture MVC (Model-View-Controller) de notre application en Go, défini les structures de données et les modèles de pages.</li>
-                        <li><strong>Phase de développement (3 semaines)</strong> :
-                            <ul>
-                                <li>Développement du backend en Go avec création des contrôleurs et des routes</li>
-                                <li>Intégration avec l'API NASA</li>
-                                <li>Création des templates HTML et des styles CSS</li>
-                            </ul>
-                        </li>
-                        <li><strong>Phase de test et d'optimisation (1 semaine)</strong> : Tests des fonctionnalités, correction des bugs et optimisation des performances.</li>
-                        <li><strong>Phase de finalisation (1 semaine)</strong> : Documentation, déploiement et préparation de la présentation.</li>
-                    </ol>
-                    <p>La décomposition modulaire nous a permis de travailler en parallèle sur différentes parties du projet, facilitant l'intégration continue.</p>
-                </div>
-            </div>
-            
-            <div class="faq-item">
-                <div class="faq-question">Comment avons-nous réparti les tâches entre les membres de l'équipe ? Avons-nous utilisé une stratégie particulière pour organiser le travail ?</div>
-                <div class="faq-answer">
-                    <p>Nous avons adopté une approche basée sur les compétences et les préférences de chaque membre :</p>
+                <div class="faq-question">Comment ai-je décomposé le projet ? Quelles ont été les phases clé ?</div>
+        <div class="faq-answer">
+            <p>Mon approche de décomposition du projet s'est articulée autour des phases suivantes :</p>
+            <ol>
+                <li><strong>Phase d'analyse (1 semaine)</strong> : J'ai commencé par étudier l'API de la NASA pour comprendre les données disponibles et définir le périmètre du projet.</li>
+                <li><strong>Phase de conception (1 semaine)</strong> : J'ai conçu l'architecture MVC (Model-View-Controller) de mon application en Go, défini les structures de données et les modèles de pages.</li>
+                <li><strong>Phase de développement (3 semaines)</strong> :
                     <ul>
-                        <li><strong>Organisation par domaines de compétence</strong> : Chaque membre a pris en charge un aspect du projet correspondant à ses forces :</li>
-                        <ul>
-                            <li>Membre 1 : Backend et contrôleurs Go</li>
-                            <li>Membre 2 : Templates HTML et intégration frontend</li>
-                            <li>Membre 3 : Styles CSS et design responsive</li>
-                            <li>Membre 4 : Intégration API et gestion des données</li>
-                        </ul>
-                        <li><strong>Méthode agile adaptée</strong> : Nous avons utilisé une version simplifiée de Scrum avec :</li>
-                        <ul>
-                            <li>Sprints hebdomadaires</li>
-                            <li>Réunions quotidiennes de 15 minutes pour partager les avancées et les blocages</li>
-                            <li>Tableau Kanban (via GitHub Projects) pour visualiser les tâches en cours, à faire et terminées</li>
-                        </ul>
-                        <li><strong>Revue de code croisée</strong> : Chaque pull request devait être validée par au moins un autre membre de l'équipe avant d'être fusionnée dans la branche principale.</li>
+                        <li>Développement du backend en Go avec création des contrôleurs et des routes</li>
+                        <li>Intégration avec l'API NASA</li>
+                        <li>Création des templates HTML et des styles CSS</li>
                     </ul>
-                    <p>Cette organisation nous a permis de maintenir un rythme de développement constant tout en assurant la qualité du code.</p>
-                </div>
-            </div>
-            
-            <div class="faq-item">
-                <div class="faq-question">Comment avons-nous géré notre temps ? Avons-nous défini des priorités ?</div>
-                <div class="faq-answer">
-                    <p>Notre gestion du temps s'est appuyée sur plusieurs principes :</p>
-                    <ul>
-                        <li><strong>Matrice MoSCoW pour les priorités</strong> :</li>
-                        <ul>
-                            <li><strong>Must have</strong> : Fonctionnalités essentielles (navigation par catégories, affichage des ressources)</li>
-                            <li><strong>Should have</strong> : Fonctionnalités importantes mais non critiques (recherche avancée, filtres)</li>
-                            <li><strong>Could have</strong> : Améliorations souhaitables (animations, fonctionnalités supplémentaires)</li>
-                            <li><strong>Won't have</strong> : Fonctionnalités reportées à une version ultérieure</li>
-                        </ul>
-                        <li><strong>Planning par jalons</strong> : Nous avons défini des jalons clairs à atteindre toutes les deux semaines, avec des démos intermédiaires.</li>
-                        <li><strong>Gestion des risques</strong> : Nous avons identifié les zones à risque (notamment l'intégration avec l'API NASA) et les avons abordées en priorité.</li>
-                        <li><strong>Marges de sécurité</strong> : Nous avons volontairement prévu une semaine tampon à la fin du projet pour gérer les imprévus et finaliser les éléments en retard.</li>
-                    </ul>
-                    <p>Cette approche nous a permis de livrer toutes les fonctionnalités essentielles dans les délais, même lorsque nous avons rencontré des difficultés techniques avec certaines parties de l'API.</p>
-                </div>
-            </div>
-            
-            <div class="faq-item">
-                <div class="faq-question">Quelle stratégie avons-nous adoptée pour nous documenter ?</div>
-                <div class="faq-answer">
-                    <p>Notre stratégie de documentation a été multidimensionnelle :</p>
-                    <ul>
-                        <li><strong>Documentation de l'API NASA</strong> : Nous avons commencé par étudier la documentation officielle de l'API NASA et créé un document de synthèse des endpoints utiles.</li>
-                        <li><strong>Documentation du code</strong> :</li>
-                        <ul>
-                            <li>Commentaires en Go pour les fonctions et méthodes complexes</li>
-                            <li>Documentation des structures de données et des modèles</li>
-                            <li>Description des contrôleurs et de leur rôle</li>
-                        </ul>
-                        <li><strong>Documentation pour les utilisateurs</strong> :</li>
-                        <ul>
-                            <li>Création d'un README.md complet avec instructions d'installation et d'utilisation</li>
-                            <li>Description des fonctionnalités accessibles</li>
-                        </ul>
-                        <li><strong>Documentation du processus</strong> :</li>
-                        <ul>
-                            <li>Journal de bord du projet avec les décisions importantes</li>
-                            <li>Documentation des problèmes rencontrés et des solutions apportées</li>
-                            <li>Cette page FAQ qui résume notre approche du projet</li>
-                        </ul>
-                    </ul>
-                    <p>Nous avons adopté le principe "Documentation as Code" en maintenant nos documents à jour en même temps que le code, plutôt que de tout documenter à la fin. Cette approche a facilité la montée en compétence de tous les membres sur les différentes parties du projet.</p>
-                </div>
-            </div>
+                </li>
+                <li><strong>Phase de test et d'optimisation (1 semaine)</strong> : Tests des fonctionnalités, correction des bugs et optimisation des performances.</li>
+                <li><strong>Phase de finalisation (1 semaine)</strong> : Documentation, déploiement et préparation de la présentation.</li>
+            </ol>
+            <p>Cette décomposition modulaire m'a permis de gérer efficacement les différentes parties du projet tout en maintenant une vision d'ensemble cohérente.</p>
+        </div>
+    </div>
+    
+    <div class="faq-item">
+        <div class="faq-question">Comment ai-je organisé les différentes tâches ? Ai-je utilisé une stratégie particulière pour organiser mon travail ?</div>
+        <div class="faq-answer">
+            <p>J'ai adopté une approche méthodique pour organiser mon travail en solo :</p>
+            <ul>
+                <li><strong>Organisation par couches techniques</strong> : J'ai structuré mon travail par domaines techniques pour maintenir ma concentration :</li>
+                <ul>
+                    <li>Backend et contrôleurs Go</li>
+                    <li>Templates HTML et intégration frontend</li>
+                    <li>Styles CSS et design responsive</li>
+                    <li>Intégration API et gestion des données</li>
+                </ul>
+                <li><strong>Méthode agile personnelle</strong> : J'ai utilisé une version adaptée des principes agiles avec :</li>
+                <ul>
+                    <li>Sprints hebdomadaires avec objectifs clairs</li>
+                    <li>Revue quotidienne de progression en fin de journée</li>
+                    <li>Tableau Kanban (via GitHub Projects) pour visualiser les tâches en cours, à faire et terminées</li>
+                </ul>
+                <li><strong>Revue de code systématique</strong> : À la fin de chaque fonctionnalité, j'ai pris le temps de réviser le code écrit pour assurer sa qualité et sa maintenabilité.</li>
+            </ul>
+            <p>Cette organisation m'a permis de maintenir un rythme de développement constant et d'éviter de me disperser sur trop de tâches simultanément.</p>
+        </div>
+    </div>
+    
+    <div class="faq-item">
+        <div class="faq-question">Comment ai-je géré mon temps ? Ai-je défini des priorités ?</div>
+        <div class="faq-answer">
+            <p>Ma gestion du temps s'est appuyée sur plusieurs principes :</p>
+            <ul>
+                <li><strong>Matrice MoSCoW pour les priorités</strong> :</li>
+                <ul>
+                    <li><strong>Must have</strong> : Fonctionnalités essentielles (navigation par catégories, affichage des ressources)</li>
+                    <li><strong>Should have</strong> : Fonctionnalités importantes mais non critiques (recherche avancée, filtres)</li>
+                    <li><strong>Could have</strong> : Améliorations souhaitables (animations, fonctionnalités supplémentaires)</li>
+                    <li><strong>Won't have</strong> : Fonctionnalités reportées à une version ultérieure</li>
+                </ul>
+                <li><strong>Planning par jalons</strong> : J'ai défini des jalons clairs à atteindre chaque semaine, avec des points de contrôle réguliers.</li>
+                <li><strong>Gestion des risques</strong> : J'ai identifié les zones à risque (notamment l'intégration avec l'API NASA) et les ai abordées en priorité.</li>
+                <li><strong>Marges de sécurité</strong> : J'ai volontairement prévu une semaine tampon à la fin du projet pour gérer les imprévus et finaliser les éléments en retard.</li>
+                <li><strong>Technique Pomodoro</strong> : J'ai utilisé des sessions de travail intensif de 25 minutes suivies de pauses courtes pour maintenir ma productivité.</li>
+            </ul>
+            <p>Cette approche m'a permis de livrer toutes les fonctionnalités essentielles dans les délais, même lorsque j'ai rencontré des difficultés techniques avec certaines parties de l'API.</p>
+        </div>
+    </div>
+    
+    <div class="faq-item">
+        <div class="faq-question">Quelle stratégie ai-je adoptée pour me documenter ?</div>
+        <div class="faq-answer">
+            <p>Ma stratégie de documentation a été multidimensionnelle :</p>
+            <ul>
+                <li><strong>Documentation de l'API NASA</strong> : J'ai commencé par étudier la documentation officielle de l'API NASA et créé un document de synthèse des endpoints utiles.</li>
+                <li><strong>Documentation du code</strong> :</li>
+                <ul>
+                    <li>Commentaires en Go pour les fonctions et méthodes complexes</li>
+                    <li>Documentation des structures de données et des modèles</li>
+                    <li>Description des contrôleurs et de leur rôle</li>
+                </ul>
+                <li><strong>Documentation pour les utilisateurs</strong> :</li>
+                <ul>
+                    <li>Création d'un README.md complet avec instructions d'installation et d'utilisation</li>
+                    <li>Description des fonctionnalités accessibles</li>
+                </ul>
+                <li><strong>Documentation du processus</strong> :</li>
+                <ul>
+                    <li>Journal de bord du projet avec les décisions importantes</li>
+                    <li>Documentation des problèmes rencontrés et des solutions apportées</li>
+                    <li>Cette page FAQ qui résume mon approche du projet</li>
+                </ul>
+            </ul>
+            <p>J'ai adopté le principe "Documentation as Code" en maintenant mes documents à jour en même temps que le code, plutôt que de tout documenter à la fin. Cette approche m'a permis de garder une vision claire du projet et facilitera sa reprise ultérieure si besoin.</p>
+        </div>
+    </div>
         </section>
     </div>
 
