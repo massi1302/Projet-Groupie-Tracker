@@ -28,12 +28,12 @@ type SearchOptions struct {
 
 // FilterOptions structure pour les filtres
 type FilterOptions struct {
-	Source           string   // NASA, APOD, Mars Rover, etc.
-	MediaType        string   // image, video
-	DateFrom         string   // Format: YYYY-MM-DD
-	DateTo           string   // Format: YYYY-MM-DD
-	AvailableSources []string // Sources disponibles pour le filtre
-	AvailableTypes   []string // Types de média disponibles
+	Source           string
+	MediaType        string
+	DateFrom         string
+	DateTo           string
+	AvailableSources []string
+	AvailableTypes   []string
 }
 
 func SearchHandler(w http.ResponseWriter, r *http.Request) {
