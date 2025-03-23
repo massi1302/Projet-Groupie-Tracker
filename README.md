@@ -65,7 +65,7 @@ Ce projet utilise l'API publique de la NASA pour récupérer des données authen
 - **Endpoints utilisés**:
   - `/planetary/apod` - Image astronomique du jour
   - `/mars-photos/api/v1/rovers` - Photos des rovers martiens
-  -`/wmts/epsg4326/best/MODIS_Terra_CorrectedReflectance_TrueColor/default/{date}/250m/{zoom}/{y}/{x}.jpg` - Images satellite de la Terre
+  -`/wmts/epsg4326/best/MODIS_Terra_CorrectedReflectance_TrueColor/default/{date}/250m/{zoom}/{y}/{x}.jpg` - Images satellite Terre
   -`https://api.rss2json.com/v1/api.json` - Conversion du flux RSS des actualités NASA
   -`https://api.mapbox.com/styles/v1/mapbox/satellite-v9/static/{lon},{lat},{zoom},0/600x400` - Images satellite Mapbox
   -`https://maps.googleapis.com/maps/api/staticmap` - Solution de secours pour images satellite
